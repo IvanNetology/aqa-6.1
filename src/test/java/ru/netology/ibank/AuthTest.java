@@ -28,13 +28,13 @@ public class AuthTest {
     public void shouldNoUser() {
         String status = "active";
         RegistrationInfo info = DataGenerator.Registration.setUpAll(status);
+        RegistrationInfo wrongInfo = DataGenerator.Registration.invalidData();
 
         open("http://localhost:9999");
-        $("[data-test-id='login'] input").setValue("fox.alisa");
-        $("[data-test-id='password'] input").setValue("gorilla7dom");
+        $("[data-test-id='login'] input").setValue(wrongInfo.getLogin());
+        $("[data-test-id='password'] input").setValue(wrongInfo.getPassword());
         $("[data-test-id='action-login']").click();
         $("[data-test-id='error-notification']").shouldHave(Condition.text("Неверно указан логин или пароль"), Duration.ofSeconds(15));
-
     }
 
     @Test
@@ -53,9 +53,10 @@ public class AuthTest {
     public void shouldErrorLogin() {
         String status = "active";
         RegistrationInfo info = DataGenerator.Registration.setUpAll(status);
+        RegistrationInfo wrongInfo = DataGenerator.Registration.invalidData();
 
         open("http://localhost:9999");
-        $("[data-test-id='login'] input").setValue("Gorilla753");
+        $("[data-test-id='login'] input").setValue(wrongInfo.getLogin());
         $("[data-test-id='password'] input").setValue(info.getPassword());
         $("[data-test-id='action-login']").click();
         $("[data-test-id='error-notification']").shouldHave(Condition.text("Неверно указан логин или пароль"), Duration.ofSeconds(15));
@@ -65,10 +66,11 @@ public class AuthTest {
     public void shouldErrorPassword() {
         String status = "active";
         RegistrationInfo info = DataGenerator.Registration.setUpAll(status);
+        RegistrationInfo wrongInfo = DataGenerator.Registration.invalidData();
 
         open("http://localhost:9999");
         $("[data-test-id='login'] input").setValue(info.getLogin());
-        $("[data-test-id='password'] input").setValue("111111");
+        $("[data-test-id='password'] input").setValue(wrongInfo.getPassword());
         $("[data-test-id='action-login']").click();
         $("[data-test-id='error-notification']").shouldHave(Condition.text("Неверно указан логин или пароль"), Duration.ofSeconds(15));
     }

@@ -9,10 +9,12 @@ import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
 
 public class DataGenerator {
-    private DataGenerator() {}
+    private DataGenerator() {
+    }
 
     public static class Registration {
-        private Registration() {}
+        private Registration() {
+        }
 
         private static RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
@@ -32,8 +34,13 @@ public class DataGenerator {
             .when() // "когда"
                 .post("/api/system/users") // на какой путь, относительно BaseUri отправляем запрос
             .then() // "тогда ожидаем"
-                    .statusCode(200); // код 200 OK
+                .statusCode(200); // код 200 OK
             return user;
+        }
+
+        static RegistrationInfo invalidData() {
+            Faker faker1 = new Faker();
+            return new RegistrationInfo(faker1.name().username(), faker1.internet().password());
         }
     }
 }
