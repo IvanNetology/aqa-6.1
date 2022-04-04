@@ -42,5 +42,9 @@ public class DataGenerator {
             Faker faker1 = new Faker();
             return new RegistrationInfo(faker1.name().username(), faker1.internet().password());
         }
+
+        static RegistrationInfo emptyData() {
+            return new RegistrationInfo("", "");
+        }
     }
 }

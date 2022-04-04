@@ -79,10 +79,11 @@ public class AuthTest {
     public void shouldBlankFields() {
         String status = "active";
         RegistrationInfo info = DataGenerator.Registration.setUpAll(status);
+        RegistrationInfo blankField = DataGenerator.Registration.emptyData();
 
         open("http://localhost:9999");
-        $("[data-test-id='login'] input").setValue("");
-        $("[data-test-id='password'] input").setValue("");
+        $("[data-test-id='login'] input").setValue(blankField.getLogin());
+        $("[data-test-id='password'] input").setValue(blankField.getPassword());
         $("[data-test-id='action-login']").click();
         $("[data-test-id='login'] .input__sub").shouldHave(Condition.text("Поле обязательно для заполнения"));
         $("[data-test-id='password'] .input__sub").shouldHave(Condition.text("Поле обязательно для заполнения"));
